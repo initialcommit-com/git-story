@@ -40,11 +40,11 @@ class GitStory(MovingCameraScene):
 
             commitId = Text(commit.hexsha[0:6], font="Monospace", font_size=20).next_to(circle, UP)
 
-            threeDots = ''
-            if ( len(commit.message) > 18 ):
-                threeDots = '...'
+            #threeDots = ''
+            #if ( len(commit.message) > 18 ):
+            #    threeDots = '...'
 
-            message = Text(commit.message[:18] + threeDots, font="Monospace", font_size=14).next_to(circle, DOWN)
+            message = Text('\n'.join(commit.message[i:i+20] for i in range(0, len(commit.message), 20))[:100], font="Monospace", font_size=14).next_to(circle, DOWN)
 
             self.play(Create(circle), AddTextLetterByLetter(commitId), AddTextLetterByLetter(message))
 
