@@ -1,7 +1,7 @@
 from manim import *
 import git
 
-class GitStory(Scene):
+class GitStory(MovingCameraScene):
     def __init__(self, numberOfCommits):
         super().__init__()
         self.numberOfCommits = numberOfCommits
@@ -19,6 +19,9 @@ class GitStory(Scene):
         self.wait(2)
         self.play(FadeOut(initialCommitText))
         self.play(initialCommitLogo.animate.scale(0.25).to_edge(UP, buff=0).to_edge(RIGHT, buff=0))
+        
+        self.camera.frame.save_state()
+        self.play(FadeOut(initialCommitLogo))
 
         i = 1
         prevCircle = None
@@ -29,8 +32,8 @@ class GitStory(Scene):
 
             if prevCircle:
                 circle.next_to(prevCircle, RIGHT, buff=1.5)
-            else:
-                circle.to_edge(LEFT)
+
+            self.play(self.camera.frame.animate.move_to(circle.get_center()))
 
             arrow = Arrow(start=RIGHT, end=LEFT).next_to(circle, LEFT, buff=0)
             arrow.width = 1
@@ -57,6 +60,8 @@ class GitStory(Scene):
         self.wait(3)
 
         self.play(FadeOut(toFadeOut))
+
+        self.play(Restore(self.camera.frame))
 
         self.play(initialCommitLogo.animate.scale(4).set_x(0).set_y(0))
 
