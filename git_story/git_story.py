@@ -2,9 +2,9 @@ from manim import *
 import git
 
 class GitStory(MovingCameraScene):
-    def __init__(self, numberOfCommits):
+    def __init__(self, args):
         super().__init__()
-        self.numberOfCommits = numberOfCommits
+        self.args = args
 
     def construct(self):
         repo = git.Repo(search_parent_directories=True)
@@ -12,21 +12,23 @@ class GitStory(MovingCameraScene):
         commits.reverse()
 
         initialCommitLogo = ImageMobject("logo.png")
-        self.add(initialCommitLogo)
 
-        initialCommitText = Text("Git Story, by initialcommit.com", font="Monospace", font_size=36).to_edge(UP, buff=1)
-        self.add(initialCommitText)
-        self.wait(2)
-        self.play(FadeOut(initialCommitText))
-        self.play(initialCommitLogo.animate.scale(0.25).to_edge(UP, buff=0).to_edge(RIGHT, buff=0))
-        
-        self.camera.frame.save_state()
-        self.play(FadeOut(initialCommitLogo))
+        if ( not self.args.no_intro ):
+            self.add(initialCommitLogo)
+
+            initialCommitText = Text("Git Story, by initialcommit.com", font="Monospace", font_size=36).to_edge(UP, buff=1)
+            self.add(initialCommitText)
+            self.wait(2)
+            self.play(FadeOut(initialCommitText))
+            self.play(initialCommitLogo.animate.scale(0.25).to_edge(UP, buff=0).to_edge(RIGHT, buff=0))
+	
+            self.camera.frame.save_state()
+            self.play(FadeOut(initialCommitLogo))
 
         i = 1
         prevCircle = None
         toFadeOut = Group()
-        for commit in commits[:self.numberOfCommits]:
+        for commit in commits[:self.args.commits]:
             circle = Circle()
             circle.height = 1
 
@@ -61,14 +63,16 @@ class GitStory(MovingCameraScene):
 
         self.play(FadeOut(toFadeOut))
 
-        self.play(Restore(self.camera.frame))
+        if ( not self.args.no_outro ):
 
-        self.play(initialCommitLogo.animate.scale(4).set_x(0).set_y(0))
+            self.play(Restore(self.camera.frame))
 
-        thankYouText= Text("Thanks for using Initial Commit!", font="Monospace", font_size=36).to_edge(UP, buff=1)
-        self.play(AddTextLetterByLetter(thankYouText))
+            self.play(initialCommitLogo.animate.scale(4).set_x(0).set_y(0))
 
-        learnMoreText = Text("Learn more at initialcommit.com", font="Monospace", font_size=36).to_edge(DOWN, buff=1)
-        self.play(AddTextLetterByLetter(learnMoreText))
+            thankYouText= Text("Thanks for using Initial Commit!", font="Monospace", font_size=36).to_edge(UP, buff=1)
+            self.play(AddTextLetterByLetter(thankYouText))
 
-        self.wait(3)
+            learnMoreText = Text("Learn more at initialcommit.com", font="Monospace", font_size=36).to_edge(DOWN, buff=1)
+            self.play(AddTextLetterByLetter(learnMoreText))
+
+            self.wait(3)
