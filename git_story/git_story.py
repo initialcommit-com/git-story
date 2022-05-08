@@ -68,6 +68,7 @@ class GitStory(MovingCameraScene):
                 toFadeOut.add(head, headText)
                 prevRef = head
 
+            x = 0
             for branch in repo.heads:
                 if ( commit.hexsha == branch.commit.hexsha ):
                     branchText = Text(branch.name, font="Monospace", font_size=20)
@@ -80,6 +81,10 @@ class GitStory(MovingCameraScene):
 
                     self.play(Create(branchRec), Create(branchText))
                     toFadeOut.add(branchRec, branchText)
+
+                    x += 1
+                    if ( x >= self.args.max_branches_per_commit ):
+                        break
 
 
             if ( prevCircle ):
@@ -101,10 +106,10 @@ class GitStory(MovingCameraScene):
 
             self.play(logo.animate.scale(4).set_x(0).set_y(0))
 
-            outroTopText = Text(self.args.outro_toptext, font="Monospace", font_size=36).to_edge(UP, buff=1)
+            outroTopText = Text(self.args.outro_top_text, font="Monospace", font_size=36).to_edge(UP, buff=1)
             self.play(AddTextLetterByLetter(outroTopText))
 
-            outroBottomText = Text(self.args.outro_bottomtext, font="Monospace", font_size=36).to_edge(DOWN, buff=1)
+            outroBottomText = Text(self.args.outro_bottom_text, font="Monospace", font_size=36).to_edge(DOWN, buff=1)
             self.play(AddTextLetterByLetter(outroBottomText))
 
             self.wait(3)
