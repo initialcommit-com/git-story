@@ -11,22 +11,23 @@ class GitStory(MovingCameraScene):
         commits = list(repo.iter_commits('HEAD'))
         commits.reverse()
 
-        initialCommitLogo = ImageMobject("logo.png")
+        logo = ImageMobject(self.args.logo)
+        logo.width = 2
 
         if ( not self.args.no_intro ):
-            self.add(initialCommitLogo)
+            self.add(logo)
 
             initialCommitText = Text(self.args.title, font="Monospace", font_size=36).to_edge(UP, buff=1)
             self.add(initialCommitText)
             self.wait(2)
             self.play(FadeOut(initialCommitText))
-            self.play(initialCommitLogo.animate.scale(0.25).to_edge(UP, buff=0).to_edge(RIGHT, buff=0))
+            self.play(logo.animate.scale(0.25).to_edge(UP, buff=0).to_edge(RIGHT, buff=0))
 	
             self.camera.frame.save_state()
-            self.play(FadeOut(initialCommitLogo))
+            self.play(FadeOut(logo))
 
         else:
-            initialCommitLogo.scale(0.25).to_edge(UP, buff=0).to_edge(RIGHT, buff=0)
+            logo.scale(0.25).to_edge(UP, buff=0).to_edge(RIGHT, buff=0)
             self.camera.frame.save_state()
 
         i = 1
@@ -71,7 +72,7 @@ class GitStory(MovingCameraScene):
 
             self.play(Restore(self.camera.frame))
 
-            self.play(initialCommitLogo.animate.scale(4).set_x(0).set_y(0))
+            self.play(logo.animate.scale(4).set_x(0).set_y(0))
 
             thankYouText= Text("Thanks for using Initial Commit!", font="Monospace", font_size=36).to_edge(UP, buff=1)
             self.play(AddTextLetterByLetter(thankYouText))
