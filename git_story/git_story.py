@@ -47,10 +47,6 @@ class GitStory(MovingCameraScene):
 
             commitId = Text(commit.hexsha[0:6], font="Monospace", font_size=20).next_to(circle, UP)
 
-            #threeDots = ''
-            #if ( len(commit.message) > 18 ):
-            #    threeDots = '...'
-
             message = Text('\n'.join(commit.message[i:i+20] for i in range(0, len(commit.message), 20))[:100], font="Monospace", font_size=14).next_to(circle, DOWN)
 
             self.play(Create(circle), AddTextLetterByLetter(commitId), AddTextLetterByLetter(message))
@@ -74,10 +70,10 @@ class GitStory(MovingCameraScene):
 
             self.play(logo.animate.scale(4).set_x(0).set_y(0))
 
-            thankYouText= Text("Thanks for using Initial Commit!", font="Monospace", font_size=36).to_edge(UP, buff=1)
-            self.play(AddTextLetterByLetter(thankYouText))
+            outroTopText = Text(self.args.outro_toptext, font="Monospace", font_size=36).to_edge(UP, buff=1)
+            self.play(AddTextLetterByLetter(outroTopText))
 
-            learnMoreText = Text("Learn more at initialcommit.com", font="Monospace", font_size=36).to_edge(DOWN, buff=1)
-            self.play(AddTextLetterByLetter(learnMoreText))
+            outroBottomText = Text(self.args.outro_bottomtext, font="Monospace", font_size=36).to_edge(DOWN, buff=1)
+            self.play(AddTextLetterByLetter(outroBottomText))
 
             self.wait(3)
