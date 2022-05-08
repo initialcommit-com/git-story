@@ -25,6 +25,10 @@ class GitStory(MovingCameraScene):
             self.camera.frame.save_state()
             self.play(FadeOut(initialCommitLogo))
 
+        else:
+            initialCommitLogo.scale(0.25).to_edge(UP, buff=0).to_edge(RIGHT, buff=0)
+            self.camera.frame.save_state()
+
         i = 1
         prevCircle = None
         toFadeOut = Group()
