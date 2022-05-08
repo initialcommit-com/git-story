@@ -57,7 +57,7 @@ class GitStory(MovingCameraScene):
 
             self.play(Create(circle), AddTextLetterByLetter(commitId), AddTextLetterByLetter(message))
 
-            isHead = False
+            prevRef = commitId
             if ( commit.hexsha == repo.head.commit.hexsha ):
                 head = Rectangle(color=BLUE, fill_color=BLUE)
                 head.width = 1
@@ -66,19 +66,17 @@ class GitStory(MovingCameraScene):
                 headText = Text("HEAD", font="Monospace", font_size=20).next_to(commitId, UP*1.5)
                 self.play(Create(head), Create(headText))
                 toFadeOut.add(head, headText)
-                isHead = True
+                prevRef = head
 
             for branch in repo.heads:
                 if ( commit.hexsha == branch.commit.hexsha ):
                     branchText = Text(branch.name, font="Monospace", font_size=20)
                     branchRec = Rectangle(color=GREEN, fill_color=GREEN, height=0.4, width=branchText.width+0.25)
 
-                    if ( isHead ):
-                        branchRec.next_to(head, UP)
-                        branchText.next_to(head, UP*1.5)
-                    else:
-                        branchRec.next_to(commitId, UP)
-                        branchText.next_to(commitId, UP*1.5)
+                    branchRec.next_to(prevRef, UP)
+                    branchText.next_to(prevRef, UP*1.5)
+
+                    prevRef = branchRec 
 
                     self.play(Create(branchRec), Create(branchText))
                     toFadeOut.add(branchRec, branchText)
