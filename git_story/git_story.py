@@ -16,7 +16,7 @@ class GitStory(MovingCameraScene):
         if ( not self.args.no_intro ):
             self.add(initialCommitLogo)
 
-            initialCommitText = Text("Git Story, by initialcommit.com", font="Monospace", font_size=36).to_edge(UP, buff=1)
+            initialCommitText = Text(self.args.title, font="Monospace", font_size=36).to_edge(UP, buff=1)
             self.add(initialCommitText)
             self.wait(2)
             self.play(FadeOut(initialCommitText))
