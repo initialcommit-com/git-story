@@ -9,7 +9,9 @@ class GitStory(MovingCameraScene):
     def construct(self):
         repo = git.Repo(search_parent_directories=True)
         commits = list(repo.iter_commits('HEAD'))
-        commits.reverse()
+
+        if ( not self.args.reverse ):
+            commits.reverse()
 
         logo = ImageMobject(self.args.logo)
         logo.width = 3
@@ -42,7 +44,11 @@ class GitStory(MovingCameraScene):
 
             self.play(self.camera.frame.animate.move_to(circle.get_center()))
 
-            arrow = Arrow(start=RIGHT, end=LEFT).next_to(circle, LEFT, buff=0)
+            if ( not self.args.reverse ):
+                arrow = Arrow(start=RIGHT, end=LEFT).next_to(circle, LEFT, buff=0)
+            else:
+                arrow = Arrow(start=LEFT, end=RIGHT).next_to(circle, LEFT, buff=0)
+
             arrow.width = 1
 
             commitId = Text(commit.hexsha[0:6], font="Monospace", font_size=20).next_to(circle, UP)
