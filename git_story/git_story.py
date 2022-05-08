@@ -12,7 +12,7 @@ class GitStory(MovingCameraScene):
         commits.reverse()
 
         logo = ImageMobject(self.args.logo)
-        logo.width = 2
+        logo.width = 3
 
         if ( not self.args.no_intro ):
             self.add(logo)
