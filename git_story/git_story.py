@@ -36,7 +36,7 @@ class GitStory(MovingCameraScene):
         prevCircle = None
         toFadeOut = Group()
         for commit in commits[:self.args.commits]:
-            circle = Circle()
+            circle = Circle(fill_color=RED, fill_opacity=0.25)
             circle.height = 1
 
             if prevCircle:
@@ -59,7 +59,7 @@ class GitStory(MovingCameraScene):
 
             prevRef = commitId
             if ( commit.hexsha == repo.head.commit.hexsha ):
-                head = Rectangle(color=BLUE)
+                head = Rectangle(color=BLUE, fill_color=BLUE, fill_opacity=0.25)
                 head.width = 1
                 head.height = 0.4
                 head.next_to(commitId, UP)
@@ -72,7 +72,7 @@ class GitStory(MovingCameraScene):
             for branch in repo.heads:
                 if ( commit.hexsha == branch.commit.hexsha ):
                     branchText = Text(branch.name, font="Monospace", font_size=20)
-                    branchRec = Rectangle(color=GREEN, height=0.4, width=branchText.width+0.25)
+                    branchRec = Rectangle(color=GREEN, fill_color=GREEN, fill_opacity=0.25, height=0.4, width=branchText.width+0.25)
 
                     branchRec.next_to(prevRef, UP)
                     branchText.move_to(branchRec.get_center())
@@ -90,7 +90,7 @@ class GitStory(MovingCameraScene):
             for tag in repo.tags:
                 if ( commit.hexsha == tag.commit.hexsha ):
                     tagText = Text(tag.name, font="Monospace", font_size=20)
-                    tagRec = Rectangle(color=YELLOW, height=0.4, width=tagText.width+0.25)
+                    tagRec = Rectangle(color=YELLOW, fill_color=YELLOW, fill_opacity=0.25, height=0.4, width=tagText.width+0.25)
 
                     tagRec.next_to(prevRef, UP)
                     tagText.move_to(tagRec.get_center())
