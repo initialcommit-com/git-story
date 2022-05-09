@@ -36,7 +36,13 @@ class GitStory(MovingCameraScene):
         prevCircle = None
         toFadeOut = Group()
         for commit in commits[:self.args.commits]:
-            circle = Circle(fill_color=RED, fill_opacity=0.25)
+
+            if ( len(commit.parents) <= 1 ):
+                commitFill = RED
+            else:
+                commitFill = GRAY
+
+            circle = Circle(stroke_color=commitFill, fill_color=commitFill, fill_opacity=0.25)
             circle.height = 1
 
             if prevCircle:
