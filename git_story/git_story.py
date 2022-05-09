@@ -59,7 +59,7 @@ class GitStory(MovingCameraScene):
 
             prevRef = commitId
             if ( commit.hexsha == repo.head.commit.hexsha ):
-                head = Rectangle(color=BLUE, fill_color=BLUE)
+                head = Rectangle(color=BLUE)
                 head.width = 1
                 head.height = 0.4
                 head.next_to(commitId, UP)
@@ -72,7 +72,7 @@ class GitStory(MovingCameraScene):
             for branch in repo.heads:
                 if ( commit.hexsha == branch.commit.hexsha ):
                     branchText = Text(branch.name, font="Monospace", font_size=20)
-                    branchRec = Rectangle(color=GREEN, fill_color=GREEN, height=0.4, width=branchText.width+0.25)
+                    branchRec = Rectangle(color=GREEN, height=0.4, width=branchText.width+0.25)
 
                     branchRec.next_to(prevRef, UP)
                     branchText.next_to(prevRef, UP*1.5)
@@ -84,6 +84,24 @@ class GitStory(MovingCameraScene):
 
                     x += 1
                     if ( x >= self.args.max_branches_per_commit ):
+                        break
+
+            x = 0
+            for tag in repo.tags:
+                if ( commit.hexsha == tag.commit.hexsha ):
+                    tagText = Text(tag.name, font="Monospace", font_size=20)
+                    tagRec = Rectangle(color=YELLOW, height=0.4, width=tagText.width+0.25)
+
+                    tagRec.next_to(prevRef, UP)
+                    tagText.next_to(prevRef, UP*1.5)
+
+                    prevRef = tagRec
+
+                    self.play(Create(tagRec), Create(tagText))
+                    toFadeOut.add(tagRec, tagText)
+
+                    x += 1
+                    if ( x >= self.args.max_tags_per_commit ):
                         break
 
 

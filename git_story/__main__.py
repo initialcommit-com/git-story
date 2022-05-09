@@ -13,7 +13,8 @@ def main():
     parser.add_argument("--outro-bottom-text", help="Custom text to display below the logo during the outro", type=str, default="Learn more at initialcommit.com")
     parser.add_argument("--no-intro", help="Omit the intro sequence from the animation", action="store_true")
     parser.add_argument("--no-outro", help="Omit the outro sequence from the animation", action="store_true")
-    parser.add_argument("--max-branches-per-commit", help="Maximum number of branch labels to display for each commit", type=int, default=3)
+    parser.add_argument("--max-branches-per-commit", help="Maximum number of branch labels to display for each commit", type=int, default=2)
+    parser.add_argument("--max-tags-per-commit", help="Maximum number of tags to display for each commit", type=int, default=1)
     
     scene = gs.GitStory(parser.parse_args())
     scene.render()
