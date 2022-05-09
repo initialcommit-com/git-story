@@ -63,7 +63,7 @@ class GitStory(MovingCameraScene):
                 head.width = 1
                 head.height = 0.4
                 head.next_to(commitId, UP)
-                headText = Text("HEAD", font="Monospace", font_size=20).next_to(commitId, UP*1.5)
+                headText = Text("HEAD", font="Monospace", font_size=20).move_to(head.get_center())
                 self.play(Create(head), Create(headText))
                 toFadeOut.add(head, headText)
                 prevRef = head
@@ -75,7 +75,7 @@ class GitStory(MovingCameraScene):
                     branchRec = Rectangle(color=GREEN, height=0.4, width=branchText.width+0.25)
 
                     branchRec.next_to(prevRef, UP)
-                    branchText.next_to(prevRef, UP*1.5)
+                    branchText.move_to(branchRec.get_center())
 
                     prevRef = branchRec 
 
@@ -93,7 +93,7 @@ class GitStory(MovingCameraScene):
                     tagRec = Rectangle(color=YELLOW, height=0.4, width=tagText.width+0.25)
 
                     tagRec.next_to(prevRef, UP)
-                    tagText.next_to(prevRef, UP*1.5)
+                    tagText.move_to(tagRec.get_center())
 
                     prevRef = tagRec
 
