@@ -4,8 +4,11 @@ import argparse
 from manim.utils.file_ops import open_file as open_media_file
 
 def main():
-    parser = argparse.ArgumentParser("git-story")
-    parser.add_argument("--commits", help="The number of commits to display in the Git animation", type=int)
+    parser = argparse.ArgumentParser("git-story", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("--commits", help="The number of commits to display in the Git animation", type=int, default=10)
+    parser.add_argument("--last-commit", help="The ref (branch/tag), or first 6 characters of the commit to animate backwards from", type=str, default="HEAD")
+    parser.add_argument("--earliest-commit", help="The ref (branch/tag), or first 6 characters of the commit id of the earliest commit to include", type=str)
+    parser.add_argument("--hide-merged-chains", help="Hide commits from merged branches, i.e. only display mainline commits", action="store_true")
     parser.add_argument("--reverse", help="Display commits in reverse order in the Git animation", action="store_true")
     parser.add_argument("--title", help="Custom title to display at the beginning of the animation", type=str, default="Git Story, by initialcommit.com")
     parser.add_argument("--logo", help="The path to a custom logo to use in the animation intro/outro", type=str, default="logo.png")
