@@ -101,7 +101,7 @@ class GitStory(MovingCameraScene):
                 elif ( offset and not isNewCommit ):
                     arrow = Arrow(end=prevCircle.get_center(), start=self.drawnCommits[commit.hexsha].get_center())
                 elif ( not offset and not isNewCommit ):
-                    arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center())
+                    arrow = Arrow(end=prevCircle.get_center(), start=self.drawnCommits[commit.hexsha].get_center())
 
             else:
                 if ( not offset and isNewCommit ):
@@ -201,7 +201,6 @@ class GitStory(MovingCameraScene):
                             for p in range(len(self.children[commit.hexsha])):
                                 self.parseCommits(self.children[commit.hexsha][p], i+1, prevCircle, toFadeOut, False if ( p == 0 ) else True)
                 except KeyError:
-                    print(commit.hexsha)
                     pass
 
         else:
