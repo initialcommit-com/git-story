@@ -20,7 +20,7 @@ Git repo.
 
 ## Video Animation Example
 
-https://user-images.githubusercontent.com/49353917/168176404-7475d659-fb95-4841-a135-ec877b98ab59.mp4
+https://user-images.githubusercontent.com/49353917/168178222-583167f6-9e86-4e0b-a1ba-3a8c57aa3abe.mp4
 
 ## Requirements
 ---
