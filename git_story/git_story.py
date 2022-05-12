@@ -6,17 +6,25 @@ class GitStory(MovingCameraScene):
         super().__init__()
         self.args = args
         self.drawnCommits = {}
+        self.commits = []
+        self.children = {}
 
     def construct(self):
         self.repo = git.Repo(search_parent_directories=True)
-
-        commit = self.repo.commit(self.args.last_commit)
-        self.earliestCommitId = None
-        if ( self.args.earliest_commit ):
-            self.earliestCommitId = self.repo.commit(self.args.earliest_commit).hexsha
+        self.commits = list(self.repo.iter_commits(self.args.last_commit))[:self.args.commits]
 
         if ( not self.args.reverse ):
-            commits.reverse()
+            self.commits.reverse()
+
+        for commit in self.commits:
+            if ( len(commit.parents) > 0 ):
+                for parent in commit.parents:
+                    self.children.setdefault(parent.hexsha, []).append(commit)
+
+        print(self.commits)
+        print(self.children)
+
+        commit = self.commits[0]
 
         logo = ImageMobject(self.args.logo)
         logo.width = 3
@@ -63,7 +71,7 @@ class GitStory(MovingCameraScene):
             self.wait(3)
 
     def parseCommits(self, commit, i, prevCircle, toFadeOut, offset):
-        if ( i < self.args.commits and commit.hexsha != self.earliestCommitId ):
+        if ( i < self.args.commits ):
 
             if ( len(commit.parents) <= 1 ):
                 commitFill = RED
@@ -84,14 +92,25 @@ class GitStory(MovingCameraScene):
 
             isNewCommit = commit.hexsha not in self.drawnCommits
 
-            if ( not self.args.reverse and not offset and isNewCommit ):
-                arrow = Arrow(start=RIGHT, end=LEFT).next_to(circle, LEFT, buff=0)
-            elif ( self.args.reverse and offset and isNewCommit ):
-                arrow = Arrow(start=prevCircle.get_center(), end=circle.get_center())
-            elif ( self.args.reverse and not offset and not isNewCommit ):
-                arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center())
+            if ( not self.args.reverse ):
+                if ( not offset and isNewCommit ):
+                    arrow = Arrow(start=RIGHT, end=LEFT).next_to(circle, LEFT, buff=0)
+                elif ( offset and isNewCommit ):
+                    arrow = Arrow(end=prevCircle.get_center(), start=circle.get_center())
+                elif ( offset and not isNewCommit ):
+                    arrow = Arrow(end=prevCircle.get_center(), start=self.drawnCommits[commit.hexsha].get_center())
+                elif ( not offset and not isNewCommit ):
+                    arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center())
+
             else:
-                arrow = Arrow(start=LEFT, end=RIGHT).next_to(circle, LEFT, buff=0)
+                if ( not offset and isNewCommit ):
+                    arrow = Arrow(start=LEFT, end=RIGHT).next_to(circle, LEFT, buff=0)
+                elif ( offset and isNewCommit ):
+                    arrow = Arrow(start=prevCircle.get_center(), end=circle.get_center())
+                elif ( offset and not isNewCommit ):
+                    arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center())
+                elif ( not offset and not isNewCommit ):
+                    arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center())
 
             arrow.width = 1
 
@@ -164,12 +183,25 @@ class GitStory(MovingCameraScene):
 
             toFadeOut.add(circle, commitId, message)
 
-            if ( len(commit.parents) > 0 ):
-                if ( self.args.hide_merged_chains):
-                    self.parseCommits(commit.parents[0], i+1, prevCircle, toFadeOut, False)
-                else:
-                    for p in range(len(commit.parents)):
-                        self.parseCommits(commit.parents[p], i+1, prevCircle, toFadeOut, False if ( p == 0 ) else True)
+            if ( self.args.reverse ):
+                if ( len(commit.parents) > 0 ):
+                    if ( self.args.hide_merged_chains ):
+                        self.parseCommits(commit.parents[0], i+1, prevCircle, toFadeOut, False)
+                    else:
+                        for p in range(len(commit.parents)):
+                            self.parseCommits(commit.parents[p], i+1, prevCircle, toFadeOut, False if ( p == 0 ) else True)
+
+            else:
+                try:
+                    if ( len(self.children[commit.hexsha]) > 0 ):
+                        if ( self.args.hide_merged_chains ):
+                            self.parseCommits(self.children[commit.hexsha][0], i+1, prevCircle, toFadeOut, False)
+                        else:
+                            for p in range(len(self.children[commit.hexsha])):
+                                self.parseCommits(self.children[commit.hexsha][p], i+1, prevCircle, toFadeOut, False if ( p == 0 ) else True)
+                except KeyError:
+                    print(commit.hexsha)
+                    pass
 
         else:
             return
