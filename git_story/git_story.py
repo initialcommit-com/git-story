@@ -42,6 +42,8 @@ class GitStory(MovingCameraScene):
         toFadeOut = Group()
         self.parseCommits(commit, i, prevCircle, toFadeOut, False)
 
+        self.play(self.camera.frame.animate.move_to(toFadeOut.get_center()))
+
         self.wait(3)
 
         self.play(FadeOut(toFadeOut))
