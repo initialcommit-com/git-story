@@ -27,32 +27,41 @@ https://user-images.githubusercontent.com/49353917/168178222-583167f6-9e86-4e0b-
 
 * Python 3.9 or greater
 * Pip (Package manager for Python)
-* Manim (Community version): https://docs.manim.community/en/stable/installation.html
+* [Manim (Community version)](https://www.manim.community/)
+* GitPython
 
 ## Quickstart
 ---
 
-1) Install `git-story`:
+1) Install [manim and manim dependencies for your OS](https://www.manim.community/)
+
+2) Install GitPython
+
+```console
+$ pip3 install GitPython
+```
+
+3) Install `git-story`:
 
 ```console
 $ pip3 install git-story
 ```
 
-2) Browse to the Git repository you want create an animation from:
+3) Browse to the Git repository you want create an animation from:
 
 ```console
 $ cd path/to/project/root
 ```
 
-3) Run the program:
+4) Run the program:
 
 ```console
 $ git-story
 ```
 
-4) An default animation .mp4 will be created using the most recent 8 commits on your checked-out Git branch.
+5) A default animation `.mp4` file will be created using the most recent 8 commits on your checked-out Git branch.
 
-5) Use command-line options for customization, see usage:
+6) Use command-line options for customization, see usage:
 
 ```console
 $ git-story -h
@@ -114,6 +123,8 @@ $ git-story --show-outro --outro-top-text "My Git Repo" --outro-bottom-text "Tha
 
 ## Installation
 ---
+
+See **QuickStart** section for details on installing manim and GitPython dependencies. Then run:
 
 ```console
 $ pip3 install git-story
