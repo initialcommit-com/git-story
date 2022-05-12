@@ -1,6 +1,4 @@
 # git-story
----
-
 Easily create video animations (.mp4) of your Git commit history, directly from your
 Git repo.
 
@@ -19,20 +17,15 @@ Git repo.
 - Add custom branded intro/outro sequences if desired
 
 ## Video animation example
-
 https://user-images.githubusercontent.com/49353917/168178222-583167f6-9e86-4e0b-a1ba-3a8c57aa3abe.mp4
 
 ## Requirements
----
-
 * Python 3.9 or greater
 * Pip (Package manager for Python)
 * [Manim (Community version)](https://www.manim.community/)
 * GitPython
 
 ## Quickstart
----
-
 1) Install [manim and manim dependencies for your OS](https://www.manim.community/)
 
 2) Install GitPython
@@ -91,8 +84,6 @@ optional arguments:
 ```
 
 ## Command Examples
----
-
 Default - draw 8 commits starting from `HEAD`, from oldest to newest:
 
 ```console
@@ -122,8 +113,6 @@ $ git-story --show-outro --outro-top-text "My Git Repo" --outro-bottom-text "Tha
 ```
 
 ## Installation
----
-
 See **QuickStart** section for details on installing manim and GitPython dependencies. Then run:
 
 ```console
@@ -131,11 +120,7 @@ $ pip3 install git-story
 ```
 
 ## Learn More
----
-
 Learn more about this tool on the [git-story project page](https://initialcommit.com/tools/git-story).
 
 ## Authors
----
-
 * **Jacob Stopak** - on behalf of [Initial Commit](https://initialcommit.com)
