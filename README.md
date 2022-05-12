@@ -123,4 +123,4 @@ $ pip3 install git-story
 Learn more about this tool on the [git-story project page](https://initialcommit.com/tools/git-story).
 
 ## Authors
-* **Jacob Stopak** - on behalf of [Initial Commit](https://initialcommit.com)
+**Jacob Stopak** - on behalf of [Initial Commit](https://initialcommit.com)
