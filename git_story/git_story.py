@@ -8,21 +8,41 @@ class GitStory(MovingCameraScene):
         self.drawnCommits = {}
         self.commits = []
         self.children = {}
+        self.offsetLevel = 0
+        self.childChainLength = 0
+
+    def measureChildChain(self, commit):
+        try:
+            if ( len(self.children[commit.hexsha]) > 0 ):
+                for child in self.children[commit.hexsha]:
+                    self.childChainLength += 1
+                    return self.measureChildChain(child)
+            else:
+                return self.childChainLength
+        except KeyError:
+            return self.childChainLength
+            
 
     def construct(self):
         self.repo = git.Repo(search_parent_directories=True)
-        self.commits = list(self.repo.iter_commits(self.args.last_commit))[:self.args.commits]
+        self.commits = list(self.repo.iter_commits(self.args.commit_id))[:self.args.commits]
 
         if ( not self.args.reverse ):
             self.commits.reverse()
-
-        for commit in self.commits:
-            if ( len(commit.parents) > 0 ):
-                for parent in commit.parents:
-                    self.children.setdefault(parent.hexsha, []).append(commit)
-
-        print(self.commits)
-        print(self.children)
+            for commit in self.commits:
+                if ( len(commit.parents) > 0 ):
+                    for parent in commit.parents:
+                        self.children.setdefault(parent.hexsha, []).append(commit)
+            z = 1
+            while ( self.measureChildChain(self.commits[0]) < self.args.commits ):
+                self.commits = list(self.repo.iter_commits(self.args.commit_id))[:self.args.commits + z]
+                self.commits.reverse()
+                self.children = {}
+                for commit in self.commits:
+                    if ( len(commit.parents) > 0 ):
+                        for parent in commit.parents:
+                            self.children.setdefault(parent.hexsha, []).append(commit)
+                z += 1
 
         commit = self.commits[0]
 
@@ -52,6 +72,9 @@ class GitStory(MovingCameraScene):
 
         self.play(self.camera.frame.animate.move_to(toFadeOut.get_center()))
         self.play(self.camera.frame.animate.scale_to_fit_width(toFadeOut.get_width()*1.1))
+
+        if ( toFadeOut.get_height() >= self.camera.frame.get_height() ):
+            self.play(self.camera.frame.animate.scale_to_fit_height(toFadeOut.get_height()*1.1))
 
         self.wait(3)
 
@@ -86,8 +109,11 @@ class GitStory(MovingCameraScene):
                 circle.next_to(prevCircle, RIGHT, buff=1.5)
 
             if ( offset ):
-                circle.to_edge(DOWN, buff=-1)
-                self.play(self.camera.frame.animate.scale(1.5))
+                circle.next_to(circle, DOWN, buff=3.5)
+
+                if ( not self.offsetLevel ):
+                    self.play(self.camera.frame.animate.scale(1.5))
+                    self.offsetLevel += 1
 
             self.play(self.camera.frame.animate.move_to(circle.get_center()))
 
