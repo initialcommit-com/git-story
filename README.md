@@ -4,21 +4,21 @@
 Easily create video animations (.mp4) of your Git commit history, directly from your
 Git repo.
 
-## git-story is great for:
+## Use cases
 - Visualizing Git projects
 - Sharing desired parts of your workflow with your team
 - Creating animated Git videos for blog posts or YouTube
 - Helping newer developers learn Git
 
-## Features:
-- Run a simple command in the terminal to generate a Git animation (.mp4) from your repo
-- Specify the commit to start animating from (default: `HEAD`)
-- Specify the number of commits to include (default: 8)
-- Ref labels included by default for HEAD, branch names, and tags
+## Features
+- Run a simple command in the terminal to generate a custom Git animation (.mp4) from your repo
+- Specify any commit id or ref to start animating from (default: `HEAD`)
+- Specify the number of commits to include (default: `8`)
+- Ref labels are drawn by default for `HEAD`, branch names, and tags
 - Simple branching structures (1 or 2 branches)
 - Add custom branded intro/outro sequences if desired
 
-## Video Animation Example
+## Video animation example
 
 https://user-images.githubusercontent.com/49353917/168178222-583167f6-9e86-4e0b-a1ba-3a8c57aa3abe.mp4
 
@@ -81,12 +81,35 @@ optional arguments:
                         Maximum number of tags to display for each commit (default: 1)
 ```
 
-## Example
+## Command Examples
 ---
+
+Default - draw 8 commits starting from `HEAD`, from oldest to newest:
+
+```console
+$ cd path/to/project/root
+$ git-story
+```
+
+Customize the start commit and number of commits, and reverse their display order:
 
 ```console
 $ cd path/to/project/root
 $ git-story --commit-id a1b2c3 --commits=6 --reverse
+```
+
+Add an intro with custom title and logo:
+
+```console
+$ cd path/to/project/root
+$ git-story --commit-id dev --commits=10 --show-intro --title "My Git Repo" --logo "~/logo.png"
+```
+
+Add an outro with custom text and logo:
+
+```console
+$ cd path/to/project/root
+$ git-story --show-outro --outro-top-text "My Git Repo" --outro-bottom-text "Thanks for watching!" --logo "~/logo.png"
 ```
 
 ## Installation
