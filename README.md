@@ -1,6 +1,6 @@
 # git-story
-Easily create video animations (.mp4) of your Git commit history, directly from your
-Git repo.
+Tell the story of your Git project by creating video animations (.mp4)
+of your commit history directly from your Git repo.
 
 ## Use cases
 - Visualizing Git projects
