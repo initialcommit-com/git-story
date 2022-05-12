@@ -1,43 +1,44 @@
 # git-story
 ---
 
-Find and tag Git commits based on version numbers in commit messages.
+Easily create video animations (.mp4) of your Git commit history, directly from your
+Git repo.
 
-If you're like me, you often add the version number for a commit into the commit message itself, something like:
+## git-story is great for:
+- Visualizing Git projects
+- Sharing desired parts of your workflow with your team
+- Creating animated Git videos for blog posts or YouTube
+- Helping newer developers learn Git
 
-```console
-$ git commit -m "Bump version to 2.1.5"
-```
+## Features:
+- Run a simple command in the terminal to generate a Git animation (.mp4) from your repo
+- Specify the commit to start animating from (default: `HEAD`)
+- Specify the number of commits to include (default: 8)
+- Ref labels included by default for HEAD, branch names, and tags
+- Simple branching structures (1 or 2 branches)
+- Add custom branded intro/outro sequences if desired
 
-If you're still like me you probably forget to create a tag for the new version and push
-it to the remote repository. I end up having projects that have many un-tagged commits
-from months or years ago that never get real tags.
+## Video Animation Example
 
-I created `git-tagup` to conveniently search through the active branch in a Git repository
-and find un-tagged commits containing version numbers in the commit message. For each one
-it finds, the tool asks the user whether they want to create a tag for it.
-
-Currently only [SemVer](http://semver.org/) versioning format is supported, but I'm happy
-to take requests for other formats.
-
-Happy tagging!
+https://user-images.githubusercontent.com/49353917/168176404-7475d659-fb95-4841-a135-ec877b98ab59.mp4
 
 ## Requirements
 ---
 
-* Python 3.6 or greater
+* Python 3.9 or greater
 * Pip (Package manager for Python)
+* Manim (Community version): https://docs.manim.community/en/stable/installation.html
 
 ## Quickstart
 ---
 
-1) Install `git-tagup`:
+1) Install `git-story`:
 
 ```console
-$ pip install git-tagup
+$ pip3 install git-story
 ```
 
-2) Browse to the Git repository you want to add tags to - this is usually your project root directory containing the `.git` directory:
+2) Browse to the Git repository you want create an animation from:
 
 ```console
 $ cd path/to/project/root
@@ -46,15 +47,38 @@ $ cd path/to/project/root
 3) Run the program:
 
 ```console
-$ git-tagup
+$ git-story
 ```
 
-4) If version numbers are found in the commit messages, answer the prompts with a `y` to create the tag or `n` to skip it.
+4) An default animation .mp4 will be created using the most recent 8 commits on your checked-out Git branch.
 
-5) Don't forget to push the new tags to your remote when done!
+5) Use command-line options for customization, see usage:
 
 ```console
-$ git push --followtags
+$ git-story -h
+
+usage: git-story [-h] [--commits COMMITS] [--commit-id COMMIT_ID] [--hide-merged-chains] [--reverse] [--title TITLE] [--logo LOGO] [--outro-top-text OUTRO_TOP_TEXT]
+                 [--outro-bottom-text OUTRO_BOTTOM_TEXT] [--no-intro] [--no-outro] [--max-branches-per-commit MAX_BRANCHES_PER_COMMIT] [--max-tags-per-commit MAX_TAGS_PER_COMMIT]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --commits COMMITS     The number of commits to display in the Git animation (default: 8)
+  --commit-id COMMIT_ID
+                        The ref (branch/tag), or first 6 characters of the commit to animate backwards from (default: HEAD)
+  --hide-merged-chains  Hide commits from merged branches, i.e. only display mainline commits (default: False)
+  --reverse             Display commits in reverse order in the Git animation (default: False)
+  --title TITLE         Custom title to display at the beginning of the animation (default: Git Story, by initialcommit.com)
+  --logo LOGO           The path to a custom logo to use in the animation intro/outro (default: logo.png)
+  --outro-top-text OUTRO_TOP_TEXT
+                        Custom text to display above the logo during the outro (default: Thanks for using Initial Commit!)
+  --outro-bottom-text OUTRO_BOTTOM_TEXT
+                        Custom text to display below the logo during the outro (default: Learn more at initialcommit.com)
+  --no-intro            Omit the intro sequence from the animation (default: False)
+  --no-outro            Omit the outro sequence from the animation (default: False)
+  --max-branches-per-commit MAX_BRANCHES_PER_COMMIT
+                        Maximum number of branch labels to display for each commit (default: 2)
+  --max-tags-per-commit MAX_TAGS_PER_COMMIT
+                        Maximum number of tags to display for each commit (default: 1)
 ```
 
 ## Example
@@ -62,23 +86,20 @@ $ git push --followtags
 
 ```console
 $ cd path/to/project/root
-$ git-tagup
-Create the tag 'v0.1.1' for commit message 'Bump version to 0.1.1'? (y/n/q): n
-Create the tag 'v0.1.2' for commit message 'Bump version to 0.1.2'? (y/n/q): y
-Create the tag 'v0.1.3' for commit message 'Bump version to 0.1.3'? (y/n/q): q
+$ git-story --commit-id a1b2c3 --commits=6 --reverse
 ```
 
 ## Installation
 ---
 
 ```console
-$ pip install git-tagup
+$ pip3 install git-story
 ```
 
 ## Learn More
 ---
 
-Learn more about this project on the [git-tagup project page](https://initialcommit.com/projects/git-tagup).
+Learn more about this tool on the [git-story project page](https://initialcommit.com/tools/git-story).
 
 ## Authors
 ---
