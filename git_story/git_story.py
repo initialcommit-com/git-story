@@ -51,6 +51,7 @@ class GitStory(MovingCameraScene):
         self.parseCommits(commit, i, prevCircle, toFadeOut, False)
 
         self.play(self.camera.frame.animate.move_to(toFadeOut.get_center()))
+        self.play(self.camera.frame.animate.scale_to_fit_width(toFadeOut.get_width()*1.1))
 
         self.wait(3)
 
