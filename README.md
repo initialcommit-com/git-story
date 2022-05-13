@@ -31,7 +31,7 @@ https://user-images.githubusercontent.com/49353917/168178222-583167f6-9e86-4e0b-
 2) Install GitPython
 
 ```console
-$ pip3 install GitPython
+$ pip3 install gitpython
 ```
 
 3) Install `git-story`:

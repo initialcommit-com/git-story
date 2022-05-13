@@ -8,24 +8,24 @@ setuptools.setup(
     version="0.0.1",
     author="Jacob Stopak",
     author_email="jacob@initialcommit.io",
-    description="Generate basic Git animations from local Git repositories.",
+    description="Tell the story of your Git project by creating video animations (.mp4) of your commit history directly from your Git repo.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://initialcommit.com/projects/git-story",
+    url="https://initialcommit.com/tools/git-story",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.9',
     install_requires=[
         'gitpython',
         'manim'
     ],
     keywords='git story git-story manim animation gitanimation',
     project_urls={
-        'Homepage': 'https://initialcommit.com/projects/git-story',
+        'Homepage': 'https://initialcommit.com/tools/git-story',
     },
     entry_points={
         'console_scripts': [
