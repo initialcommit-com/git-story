@@ -9,7 +9,7 @@ of your commit history directly from your Git repo.
 - Helping newer developers learn Git
 
 ## Features
-- Run a simple command in the terminal to generate a custom Git animation (.mp4) from your repo
+- Run a single command in the terminal to generate a custom Git animation (.mp4) from your repo
 - Specify any commit id or ref to start animating from (default: `HEAD`)
 - Specify the number of commits to include (default: `8`)
 - Ref labels are drawn by default for `HEAD`, branch names, and tags
