@@ -1,4 +1,4 @@
-import git_story as gs
+from git_story import git_story as gs
 import sys
 import argparse
 from manim.utils.file_ops import open_file as open_media_file
