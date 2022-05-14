@@ -34,7 +34,7 @@ class GitStory(MovingCameraScene):
                     for parent in commit.parents:
                         self.children.setdefault(parent.hexsha, []).append(commit)
             z = 1
-            while ( self.measureChildChain(self.commits[0]) < self.args.commits ):
+            while ( self.measureChildChain(self.commits[0]) < self.args.commits-1 ):
                 self.commits = list(self.repo.iter_commits(self.args.commit_id))[:self.args.commits + z]
                 self.commits.reverse()
                 self.children = {}
