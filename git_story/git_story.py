@@ -74,7 +74,8 @@ class GitStory(MovingCameraScene):
         self.play(self.camera.frame.animate.scale_to_fit_width(toFadeOut.get_width()*1.1))
 
         if ( toFadeOut.get_height() >= self.camera.frame.get_height() ):
-            self.play(self.camera.frame.animate.scale_to_fit_height(toFadeOut.get_height()*1.1))
+            self.play(self.camera.frame.animate.scale_to_fit_height(toFadeOut.get_height()*1.25))
+            print('height')
 
         self.wait(3)
 
