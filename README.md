@@ -15,6 +15,7 @@ of your commit history directly from your Git repo.
 - Ref labels are drawn by default for `HEAD`, branch names, and tags
 - Simple branching structures (1 or 2 branches)
 - Add custom branded intro/outro sequences if desired
+- Dark mode and light mode
 
 ## Video animation example
 https://user-images.githubusercontent.com/49353917/168178222-583167f6-9e86-4e0b-a1ba-3a8c57aa3abe.mp4
