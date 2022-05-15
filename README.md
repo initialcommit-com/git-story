@@ -102,14 +102,14 @@ Add an intro with custom title and logo:
 
 ```console
 $ cd path/to/project/root
-$ git-story --commit-id dev --commits=10 --show-intro --title "My Git Repo" --logo "~/logo.png"
+$ git-story --commit-id dev --commits=10 --show-intro --title "My Git Repo" --logo path/to/logo.png
 ```
 
 Add an outro with custom text and logo:
 
 ```console
 $ cd path/to/project/root
-$ git-story --show-outro --outro-top-text "My Git Repo" --outro-bottom-text "Thanks for watching!" --logo "~/logo.png"
+$ git-story --show-outro --outro-top-text "My Git Repo" --outro-bottom-text "Thanks for watching!" --logo path/to/logo.png
 ```
 
 ## Installation
