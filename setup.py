@@ -30,7 +30,6 @@ setuptools.setup(
     entry_points={
         'console_scripts': [
             'git-story=git_story.__main__:main',
-            'gs=git_story.__main__:main',
         ],
     },
 )
