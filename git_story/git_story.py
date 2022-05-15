@@ -49,7 +49,7 @@ class GitStory(MovingCameraScene):
         logo = ImageMobject(self.args.logo)
         logo.width = 3
 
-        if ( not self.args.no_intro ):
+        if ( self.args.show_intro ):
             self.add(logo)
 
             initialCommitText = Text(self.args.title, font="Monospace", font_size=36).to_edge(UP, buff=1)
@@ -80,7 +80,7 @@ class GitStory(MovingCameraScene):
 
         self.play(FadeOut(toFadeOut))
 
-        if ( not self.args.no_outro ):
+        if ( self.args.show_outro ):
 
             self.play(Restore(self.camera.frame))
 
