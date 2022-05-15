@@ -1,6 +1,8 @@
 from git_story import git_story as gs
-import sys
+import sys, os
 import argparse
+import pathlib
+from manim import config
 from manim.utils.file_ops import open_file as open_media_file
 
 def main():
@@ -10,7 +12,7 @@ def main():
     parser.add_argument("--hide-merged-chains", help="Hide commits from merged branches, i.e. only display mainline commits", action="store_true")
     parser.add_argument("--reverse", help="Display commits in reverse order in the Git animation", action="store_true")
     parser.add_argument("--title", help="Custom title to display at the beginning of the animation", type=str, default="Git Story, by initialcommit.com")
-    parser.add_argument("--logo", help="The path to a custom logo to use in the animation intro/outro", type=str, default="logo.png")
+    parser.add_argument("--logo", help="The path to a custom logo to use in the animation intro/outro", type=str, default=os.path.join(str(pathlib.Path(__file__).parent.parent.resolve()), "logo.png"))
     parser.add_argument("--outro-top-text", help="Custom text to display above the logo during the outro", type=str, default="Thanks for using Initial Commit!")
     parser.add_argument("--outro-bottom-text", help="Custom text to display below the logo during the outro", type=str, default="Learn more at initialcommit.com")
     parser.add_argument("--show-intro", help="Add an intro sequence with custom logo and title", action="store_true")
