@@ -11,6 +11,11 @@ class GitStory(MovingCameraScene):
         self.offsetLevel = 0
         self.childChainLength = 0
 
+        if ( self.args.light_mode ):
+            self.fontColor = BLACK
+        else:
+            self.fontColor = WHITE
+
     def measureChildChain(self, commit):
         try:
             if ( len(self.children[commit.hexsha]) > 0 ):
@@ -52,7 +57,7 @@ class GitStory(MovingCameraScene):
         if ( self.args.show_intro ):
             self.add(logo)
 
-            initialCommitText = Text(self.args.title, font="Monospace", font_size=36).to_edge(UP, buff=1)
+            initialCommitText = Text(self.args.title, font="Monospace", font_size=36, color=self.fontColor).to_edge(UP, buff=1)
             self.add(initialCommitText)
             self.wait(2)
             self.play(FadeOut(initialCommitText))
@@ -86,10 +91,10 @@ class GitStory(MovingCameraScene):
 
             self.play(logo.animate.scale(4).set_x(0).set_y(0))
 
-            outroTopText = Text(self.args.outro_top_text, font="Monospace", font_size=36).to_edge(UP, buff=1)
+            outroTopText = Text(self.args.outro_top_text, font="Monospace", font_size=36, color=self.fontColor).to_edge(UP, buff=1)
             self.play(AddTextLetterByLetter(outroTopText))
 
-            outroBottomText = Text(self.args.outro_bottom_text, font="Monospace", font_size=36).to_edge(DOWN, buff=1)
+            outroBottomText = Text(self.args.outro_bottom_text, font="Monospace", font_size=36, color=self.fontColor).to_edge(DOWN, buff=1)
             self.play(AddTextLetterByLetter(outroBottomText))
 
             self.wait(3)
@@ -121,27 +126,27 @@ class GitStory(MovingCameraScene):
 
             if ( not self.args.reverse ):
                 if ( not offset and isNewCommit ):
-                    arrow = Arrow(start=RIGHT, end=LEFT).next_to(circle, LEFT, buff=0)
+                    arrow = Arrow(start=RIGHT, end=LEFT, color=self.fontColor).next_to(circle, LEFT, buff=0)
                 elif ( offset and isNewCommit ):
-                    arrow = Arrow(end=prevCircle.get_center(), start=circle.get_center())
+                    arrow = Arrow(end=prevCircle.get_center(), start=circle.get_center(), color=self.fontColor)
                 elif ( offset and not isNewCommit ):
-                    arrow = Arrow(end=prevCircle.get_center(), start=self.drawnCommits[commit.hexsha].get_center())
+                    arrow = Arrow(end=prevCircle.get_center(), start=self.drawnCommits[commit.hexsha].get_center(), color=self.fontColor)
                 elif ( not offset and not isNewCommit ):
-                    arrow = Arrow(end=prevCircle.get_center(), start=self.drawnCommits[commit.hexsha].get_center())
+                    arrow = Arrow(end=prevCircle.get_center(), start=self.drawnCommits[commit.hexsha].get_center(), color=self.fontColor)
 
             else:
                 if ( not offset and isNewCommit ):
-                    arrow = Arrow(start=LEFT, end=RIGHT).next_to(circle, LEFT, buff=0)
+                    arrow = Arrow(start=LEFT, end=RIGHT, color=self.fontColor).next_to(circle, LEFT, buff=0)
                 elif ( offset and isNewCommit ):
-                    arrow = Arrow(start=prevCircle.get_center(), end=circle.get_center())
+                    arrow = Arrow(start=prevCircle.get_center(), end=circle.get_center(), color=self.fontColor)
                 elif ( offset and not isNewCommit ):
-                    arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center())
+                    arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center(), color=self.fontColor)
                 elif ( not offset and not isNewCommit ):
-                    arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center())
+                    arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center(), color=self.fontColor)
 
             arrow.width = 1
 
-            commitId = Text(commit.hexsha[0:6], font="Monospace", font_size=20).next_to(circle, UP)
+            commitId = Text(commit.hexsha[0:6], font="Monospace", font_size=20, color=self.fontColor).next_to(circle, UP)
 
             newlineIndexes = []
             cm = commit.message[:100]
@@ -154,7 +159,7 @@ class GitStory(MovingCameraScene):
             for n in newlineIndexes:
                 commit.message = commit.message[:n] + "\n" + commit.message[n+1:]
 
-            message = Text(commit.message[:100], font="Monospace", font_size=14).next_to(circle, DOWN)
+            message = Text(commit.message[:100], font="Monospace", font_size=14, color=self.fontColor).next_to(circle, DOWN)
 
             if ( isNewCommit ):
                 self.play(Create(circle), AddTextLetterByLetter(commitId), AddTextLetterByLetter(message))
@@ -166,7 +171,7 @@ class GitStory(MovingCameraScene):
                     head.width = 1
                     head.height = 0.4
                     head.next_to(commitId, UP)
-                    headText = Text("HEAD", font="Monospace", font_size=20).move_to(head.get_center())
+                    headText = Text("HEAD", font="Monospace", font_size=20, color=self.fontColor).move_to(head.get_center())
                     self.play(Create(head), Create(headText))
                     toFadeOut.add(head, headText)
                     prevRef = head
@@ -174,7 +179,7 @@ class GitStory(MovingCameraScene):
                 x = 0
                 for branch in self.repo.heads:
                     if ( commit.hexsha == branch.commit.hexsha ):
-                        branchText = Text(branch.name, font="Monospace", font_size=20)
+                        branchText = Text(branch.name, font="Monospace", font_size=20, color=self.fontColor)
                         branchRec = Rectangle(color=GREEN, fill_color=GREEN, fill_opacity=0.25, height=0.4, width=branchText.width+0.25)
 
                         branchRec.next_to(prevRef, UP)
@@ -192,7 +197,7 @@ class GitStory(MovingCameraScene):
                 x = 0
                 for tag in self.repo.tags:
                     if ( commit.hexsha == tag.commit.hexsha ):
-                        tagText = Text(tag.name, font="Monospace", font_size=20)
+                        tagText = Text(tag.name, font="Monospace", font_size=20, color=self.fontColor)
                         tagRec = Rectangle(color=YELLOW, fill_color=YELLOW, fill_opacity=0.25, height=0.4, width=tagText.width+0.25)
 
                         tagRec.next_to(prevRef, UP)
