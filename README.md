@@ -52,7 +52,7 @@ $ cd path/to/project/root
 $ git-story
 ```
 
-5) A default animation `.mp4` file will be created using the most recent 8 commits on your checked-out Git branch.
+5) A default animation `.mp4` file will be created using the most recent 8 commits on your checked-out Git branch. By default, video output file is created in the current directory, within a subdirectory called `git-story_media`. The location this subdirectory is customizeable using the command line flag `--media-dir=path/to/output`.
 
 6) Use command-line options for customization, see usage:
 
@@ -70,17 +70,21 @@ optional arguments:
   --hide-merged-chains  Hide commits from merged branches, i.e. only display mainline commits (default: False)
   --reverse             Display commits in reverse order in the Git animation (default: False)
   --title TITLE         Custom title to display at the beginning of the animation (default: Git Story, by initialcommit.com)
-  --logo LOGO           The path to a custom logo to use in the animation intro/outro (default: logo.png)
+  --logo LOGO           The path to a custom logo to use in the animation intro/outro (default: /usr/local/lib/python3.9/site-packages/git_story/logo.png)
   --outro-top-text OUTRO_TOP_TEXT
                         Custom text to display above the logo during the outro (default: Thanks for using Initial Commit!)
   --outro-bottom-text OUTRO_BOTTOM_TEXT
                         Custom text to display below the logo during the outro (default: Learn more at initialcommit.com)
-  --no-intro            Omit the intro sequence from the animation (default: False)
-  --no-outro            Omit the outro sequence from the animation (default: False)
+  --show-intro          Add an intro sequence with custom logo and title (default: False)
+  --show-outro          Add an outro sequence with custom logo and text (default: False)
   --max-branches-per-commit MAX_BRANCHES_PER_COMMIT
                         Maximum number of branch labels to display for each commit (default: 2)
   --max-tags-per-commit MAX_TAGS_PER_COMMIT
                         Maximum number of tags to display for each commit (default: 1)
+  --media-dir MEDIA_DIR
+                        The path to output the animation data and video file (default: .)
+  --low-quality         Render output video in low quality, useful for faster testing (default: False)
+  --light-mode          Enable light-mode with white background (default: False)
 ```
 
 ## Command Examples
@@ -110,6 +114,27 @@ Add an outro with custom text and logo:
 ```console
 $ cd path/to/project/root
 $ git-story --show-outro --outro-top-text "My Git Repo" --outro-bottom-text "Thanks for watching!" --logo path/to/logo.png
+```
+
+Customize the output video directory location:
+
+```console
+$ cd path/to/project/root
+$ git-story --media-dir=path/to/output
+```
+
+Use light mode for white background and black text, instead of the default black background with white text:
+
+```console
+$ cd path/to/project/root
+$ git-story --light-mode
+```
+
+Generate output video in low quality to speed up rendering time (useful for repeated testing):
+
+```console
+$ cd path/to/project/root
+$ git-story --low-quality
 ```
 
 ## Installation
