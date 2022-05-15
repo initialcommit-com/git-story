@@ -2,6 +2,7 @@
 __pycache__
 *.pyc
 media/
+git-story_media/
 build/
 dist/
 git_story.egg-info/

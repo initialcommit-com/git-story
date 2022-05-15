@@ -1,5 +1,5 @@
-from git_story import git_story as gs
-import sys, os
+import git_story as gs
+import os
 import argparse
 import pathlib
 from manim import config
@@ -19,8 +19,16 @@ def main():
     parser.add_argument("--show-outro", help="Add an outro sequence with custom logo and text", action="store_true")
     parser.add_argument("--max-branches-per-commit", help="Maximum number of branch labels to display for each commit", type=int, default=2)
     parser.add_argument("--max-tags-per-commit", help="Maximum number of tags to display for each commit", type=int, default=1)
-    
-    scene = gs.GitStory(parser.parse_args())
+    parser.add_argument("--media-dir", help="The path to output the animation data and video file", type=str, default=".")
+    parser.add_argument("--low-quality", help="Render output video in low quality, useful for faster testing", action="store_true")
+
+    args = parser.parse_args()
+
+    config.media_dir = os.path.join(args.media_dir, "git-story_media")
+    if ( args.low_quality ):
+        config.quality = "low_quality"
+
+    scene = gs.GitStory(args)
     scene.render()
     open_media_file(scene.renderer.file_writer.movie_file_path)
 
