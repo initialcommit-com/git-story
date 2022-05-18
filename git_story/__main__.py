@@ -35,7 +35,11 @@ def main():
 
     scene = gs.GitStory(args)
     scene.render()
-    open_media_file(scene.renderer.file_writer.movie_file_path)
+
+    try:
+        open_media_file(scene.renderer.file_writer.movie_file_path)
+    except FileNotFoundError:
+        print("Error automatically opening video player, please manually open the video file to view animation.")
 
 if __name__ == '__main__':
     main()
