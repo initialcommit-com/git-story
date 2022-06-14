@@ -148,18 +148,8 @@ class GitStory(MovingCameraScene):
 
             commitId = Text(commit.hexsha[0:6], font="Monospace", font_size=20, color=self.fontColor).next_to(circle, UP)
 
-            newlineIndexes = []
-            cm = commit.message[:100]
-            c = 0
-            while ( len(cm) / 20 > 1 ):
-               newlineIndexes.append(cm.rfind(" ", 0, 20)+20*c)
-               cm = cm[20:]
-               c += 1
-
-            for n in newlineIndexes:
-                commit.message = commit.message[:n] + "\n" + commit.message[n+1:]
-
-            message = Text(commit.message[:100], font="Monospace", font_size=14, color=self.fontColor).next_to(circle, DOWN)
+            commit.message = commit.message.replace("\n", " ")
+            message = Text('\n'.join(commit.message[j:j+20] for j in range(0, len(commit.message), 20))[:100], font="Monospace", font_size=14, color=self.fontColor).next_to(circle, DOWN)
 
             if ( isNewCommit ):
                 self.play(Create(circle), AddTextLetterByLetter(commitId), AddTextLetterByLetter(message))
