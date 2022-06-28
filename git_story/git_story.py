@@ -40,6 +40,9 @@ class GitStory(MovingCameraScene):
             print("git-story error: No commits in current Git repository.")
             sys.exit(1)
 
+        if ( len(self.commits) < self.args.commits ):
+            self.args.commits = len(self.commits)
+
         if ( not self.args.reverse ):
             self.commits.reverse()
             for commit in self.commits:
