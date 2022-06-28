@@ -26,11 +26,19 @@ class GitStory(MovingCameraScene):
                 return self.childChainLength
         except KeyError:
             return self.childChainLength
-            
 
     def construct(self):
-        self.repo = git.Repo(search_parent_directories=True)
-        self.commits = list(self.repo.iter_commits(self.args.commit_id))[:self.args.commits]
+        try:
+            self.repo = git.Repo(search_parent_directories=True)
+        except git.exc.InvalidGitRepositoryError:
+            print("git-story error: No Git repository found at current path.")
+            sys.exit(1)
+        
+        try:
+            self.commits = list(self.repo.iter_commits(self.args.commit_id))[:self.args.commits]
+        except git.exc.GitCommandError:
+            print("git-story error: No commits in current Git repository.")
+            sys.exit(1)
 
         if ( not self.args.reverse ):
             self.commits.reverse()
