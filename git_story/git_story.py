@@ -1,5 +1,5 @@
 from manim import *
-import git
+import git, sys
 
 class GitStory(MovingCameraScene):
     def __init__(self, args):
