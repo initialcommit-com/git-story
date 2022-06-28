@@ -49,6 +49,10 @@ class GitStory(MovingCameraScene):
                             self.children.setdefault(parent.hexsha, []).append(commit)
                 z += 1
 
+            for d in self.children:
+                if ( len(self.children[d]) > 1 ):
+                    self.children[d].reverse()
+
         commit = self.commits[0]
 
         logo = ImageMobject(self.args.logo)
@@ -100,7 +104,7 @@ class GitStory(MovingCameraScene):
             self.wait(3)
 
     def parseCommits(self, commit, i, prevCircle, toFadeOut, offset):
-        if ( i < self.args.commits ):
+        if ( i < self.args.commits and commit in self.commits ):
 
             if ( len(commit.parents) <= 1 ):
                 commitFill = RED
@@ -148,8 +152,8 @@ class GitStory(MovingCameraScene):
 
             commitId = Text(commit.hexsha[0:6], font="Monospace", font_size=20, color=self.fontColor).next_to(circle, UP)
 
-            commit.message = commit.message.replace("\n", " ")
-            message = Text('\n'.join(commit.message[j:j+20] for j in range(0, len(commit.message), 20))[:100], font="Monospace", font_size=14, color=self.fontColor).next_to(circle, DOWN)
+            commitMessage = commit.message[:40].replace("\n", " ")
+            message = Text('\n'.join(commitMessage[j:j+20] for j in range(0, len(commitMessage), 20))[:100], font="Monospace", font_size=14, color=self.fontColor).next_to(circle, DOWN)
 
             if ( isNewCommit ):
                 self.play(Create(circle), AddTextLetterByLetter(commitId), AddTextLetterByLetter(message))
@@ -219,7 +223,7 @@ class GitStory(MovingCameraScene):
             if ( self.args.reverse ):
                 if ( len(commit.parents) > 0 ):
                     if ( self.args.hide_merged_chains ):
-                        self.parseCommits(commit.parents[0], i+1, prevCircle, toFadeOut, False)
+                        self.parseCommits(commit.parents[0], i+1,  prevCircle, toFadeOut, False)
                     else:
                         for p in range(len(commit.parents)):
                             self.parseCommits(commit.parents[p], i+1, prevCircle, toFadeOut, False if ( p == 0 ) else True)
