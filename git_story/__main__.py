@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--media-dir", help="The path to output the animation data and video file", type=str, default=".")
     parser.add_argument("--low-quality", help="Render output video in low quality, useful for faster testing", action="store_true")
     parser.add_argument("--light-mode", help="Enable light-mode with white background", action="store_true")
+    parser.add_argument("--invert-branches", help="Invert positioning of branches where applicable", action="store_true")
 
     args = parser.parse_args()
 
