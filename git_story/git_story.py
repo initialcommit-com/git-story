@@ -1,5 +1,5 @@
 from manim import *
-import git, sys
+import git, sys, numpy
 
 class GitStory(MovingCameraScene):
     def __init__(self, args):
@@ -138,25 +138,32 @@ class GitStory(MovingCameraScene):
             if ( not self.args.reverse ):
                 if ( not offset and isNewCommit ):
                     arrow = Arrow(start=RIGHT, end=LEFT, color=self.fontColor).next_to(circle, LEFT, buff=0)
+                    length = 1
                 elif ( offset and isNewCommit ):
                     arrow = Arrow(end=prevCircle.get_center(), start=circle.get_center(), color=self.fontColor)
+                    length = numpy.linalg.norm(circle.get_center()-prevCircle.get_center())-3
                 elif ( offset and not isNewCommit ):
                     arrow = Arrow(end=prevCircle.get_center(), start=self.drawnCommits[commit.hexsha].get_center(), color=self.fontColor)
+                    length = numpy.linalg.norm(self.drawnCommits[commit.hexsha].get_center()-prevCircle.get_center())-3
                 elif ( not offset and not isNewCommit ):
                     arrow = Arrow(end=prevCircle.get_center(), start=self.drawnCommits[commit.hexsha].get_center(), color=self.fontColor)
+                    length = numpy.linalg.norm(self.drawnCommits[commit.hexsha].get_center()-prevCircle.get_center())-3
 
             else:
                 if ( not offset and isNewCommit ):
                     arrow = Arrow(start=LEFT, end=RIGHT, color=self.fontColor).next_to(circle, LEFT, buff=0)
+                    length = 1
                 elif ( offset and isNewCommit ):
                     arrow = Arrow(start=prevCircle.get_center(), end=circle.get_center(), color=self.fontColor)
+                    length = numpy.linalg.norm(prevCircle.get_center()-circle.get_center())-3
                 elif ( offset and not isNewCommit ):
                     arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center(), color=self.fontColor)
+                    length = numpy.linalg.norm(prevCircle.get_center()-self.drawnCommits[commit.hexsha].get_center())-3
                 elif ( not offset and not isNewCommit ):
                     arrow = Arrow(start=prevCircle.get_center(), end=self.drawnCommits[commit.hexsha].get_center(), color=self.fontColor)
+                    length = numpy.linalg.norm(prevCircle.get_center()-self.drawnCommits[commit.hexsha].get_center())-3
 
-            arrow.set_length(0.75)
-            arrow.width = 1
+            arrow.set_length(length)
 
             commitId = Text(commit.hexsha[0:6], font="Monospace", font_size=20, color=self.fontColor).next_to(circle, UP)
 
