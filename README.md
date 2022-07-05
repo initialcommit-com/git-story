@@ -61,7 +61,8 @@ $ git-story
 $ git-story -h
 
 usage: git-story [-h] [--commits COMMITS] [--commit-id COMMIT_ID] [--hide-merged-chains] [--reverse] [--title TITLE] [--logo LOGO] [--outro-top-text OUTRO_TOP_TEXT]
-                 [--outro-bottom-text OUTRO_BOTTOM_TEXT] [--no-intro] [--no-outro] [--max-branches-per-commit MAX_BRANCHES_PER_COMMIT] [--max-tags-per-commit MAX_TAGS_PER_COMMIT]
+                 [--outro-bottom-text OUTRO_BOTTOM_TEXT] [--show-intro] [--show-outro] [--max-branches-per-commit MAX_BRANCHES_PER_COMMIT] [--max-tags-per-commit MAX_TAGS_PER_COMMIT]
+                 [--media-dir MEDIA_DIR] [--low-quality] [--light-mode] [--invert-branches]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -86,6 +87,7 @@ optional arguments:
                         The path to output the animation data and video file (default: .)
   --low-quality         Render output video in low quality, useful for faster testing (default: False)
   --light-mode          Enable light-mode with white background (default: False)
+  --invert-branches     Invert positioning of branches where applicable (default: False)
 ```
 
 ## Command Examples
