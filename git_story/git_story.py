@@ -228,6 +228,7 @@ class GitStory(MovingCameraScene):
                             break
 
             else:
+                self.play(self.camera.frame.animate.move_to(self.drawnCommits[commit.hexsha].get_center()))
                 self.play(Create(arrow))
                 toFadeOut.add(arrow)
                 return
