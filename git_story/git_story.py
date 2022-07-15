@@ -9,6 +9,7 @@ class GitStory(MovingCameraScene):
         self.commits = []
         self.children = {}
         self.childChainLength = 0
+        self.zoomOuts = 0
 
         if ( self.args.light_mode ):
             self.fontColor = BLACK
@@ -132,6 +133,9 @@ class GitStory(MovingCameraScene):
             while ( any((circle.get_center() == c).all() for c in self.getCenters()) ):
                 circle.next_to(circle, DOWN, buff=3.5)
                 offset += 1
+                if ( self.zoomOuts == 0 ):
+                    self.play(self.camera.frame.animate.scale(1.5))
+                self.zoomOuts += 1
 
             isNewCommit = commit.hexsha not in self.drawnCommits
 
