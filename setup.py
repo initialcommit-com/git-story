@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="git-story",
-    version="0.1.1",
+    version="0.1.2",
     author="Jacob Stopak",
     author_email="jacob@initialcommit.io",
     description="Tell the story of your Git project by creating video animations (.mp4) of your commit history directly from your Git repo.",
