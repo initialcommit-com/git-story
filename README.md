@@ -13,12 +13,13 @@ of your commit history directly from your Git repo.
 - Specify any commit id or ref to start animating from (default: `HEAD`)
 - Specify the number of commits to include (default: `8`)
 - Ref labels are drawn by default for `HEAD`, branch names, and tags
-- Simple branching structures (1 or 2 branches)
+- Reverse commit ordering and reorient branch layout
+- Works best with simpler branching structures, but should work with more complex ones as well
 - Add custom branded intro/outro sequences if desired
 - Dark mode and light mode
 
 ## Video animation example
-https://user-images.githubusercontent.com/49353917/168178222-583167f6-9e86-4e0b-a1ba-3a8c57aa3abe.mp4
+https://user-images.githubusercontent.com/49353917/179362209-48748966-6d6c-46ff-9424-b1a7266fc83f.mp4
 
 ## Requirements
 * Python 3.9 or greater
@@ -101,42 +102,42 @@ $ git-story
 Customize the start commit and number of commits, and reverse their display order:
 
 ```console
-$ cd path/to/project/root
 $ git-story --commit-id a1b2c3 --commits=6 --reverse
+```
+
+Invert the branch orientation, if multiple branches exist in the commit range:
+
+```console
+$ git-story --invert-branches
 ```
 
 Add an intro with custom title and logo:
 
 ```console
-$ cd path/to/project/root
 $ git-story --commit-id dev --commits=10 --show-intro --title "My Git Repo" --logo path/to/logo.png
 ```
 
 Add an outro with custom text and logo:
 
 ```console
-$ cd path/to/project/root
 $ git-story --show-outro --outro-top-text "My Git Repo" --outro-bottom-text "Thanks for watching!" --logo path/to/logo.png
 ```
 
 Customize the output video directory location:
 
 ```console
-$ cd path/to/project/root
 $ git-story --media-dir=path/to/output
 ```
 
 Use light mode for white background and black text, instead of the default black background with white text:
 
 ```console
-$ cd path/to/project/root
 $ git-story --light-mode
 ```
 
 Generate output video in low quality to speed up rendering time (useful for repeated testing):
 
 ```console
-$ cd path/to/project/root
 $ git-story --low-quality
 ```
 
