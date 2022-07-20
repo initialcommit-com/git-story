@@ -89,6 +89,7 @@ optional arguments:
   --low-quality         Render output video in low quality, useful for faster testing (default: False)
   --light-mode          Enable light-mode with white background (default: False)
   --invert-branches     Invert positioning of branches where applicable (default: False)
+  --speed SPEED         A multiple of the standard 1x animation speed (ex: 2 = twice as fast, 0.5 = half as fast) (default: 1)
 ```
 
 ## Command Examples

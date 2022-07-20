@@ -91,15 +91,15 @@ class GitStory(MovingCameraScene):
         toFadeOut = Group()
         self.parseCommits(commit, i, prevCircle, toFadeOut)
 
-        self.play(self.camera.frame.animate.move_to(toFadeOut.get_center()))
-        self.play(self.camera.frame.animate.scale_to_fit_width(toFadeOut.get_width()*1.1))
+        self.play(self.camera.frame.animate.move_to(toFadeOut.get_center()), run_time=1/self.args.speed)
+        self.play(self.camera.frame.animate.scale_to_fit_width(toFadeOut.get_width()*1.1), run_time=1/self.args.speed)
 
         if ( toFadeOut.get_height() >= self.camera.frame.get_height() ):
-            self.play(self.camera.frame.animate.scale_to_fit_height(toFadeOut.get_height()*1.25))
+            self.play(self.camera.frame.animate.scale_to_fit_height(toFadeOut.get_height()*1.25), run_time=1/self.args.speed)
 
         self.wait(3)
 
-        self.play(FadeOut(toFadeOut))
+        self.play(FadeOut(toFadeOut), run_time=1/self.args.speed)
 
         if ( self.args.show_outro ):
 
@@ -134,7 +134,7 @@ class GitStory(MovingCameraScene):
                 circle.next_to(circle, DOWN, buff=3.5)
                 offset += 1
                 if ( self.zoomOuts == 0 ):
-                    self.play(self.camera.frame.animate.scale(1.5))
+                    self.play(self.camera.frame.animate.scale(1.5), run_time=1/self.args.speed)
                 self.zoomOuts += 1
 
             isNewCommit = commit.hexsha not in self.drawnCommits
@@ -178,8 +178,7 @@ class GitStory(MovingCameraScene):
 
             if ( isNewCommit ):
 
-                self.play(self.camera.frame.animate.move_to(circle.get_center()))
-                self.play(Create(circle), AddTextLetterByLetter(commitId), AddTextLetterByLetter(message))
+                self.play(self.camera.frame.animate.move_to(circle.get_center()), Create(circle), AddTextLetterByLetter(commitId), AddTextLetterByLetter(message), run_time=1/self.args.speed)
                 self.drawnCommits[commit.hexsha] = circle
 
                 prevRef = commitId
@@ -189,7 +188,7 @@ class GitStory(MovingCameraScene):
                     head.height = 0.4
                     head.next_to(commitId, UP)
                     headText = Text("HEAD", font="Monospace", font_size=20, color=self.fontColor).move_to(head.get_center())
-                    self.play(Create(head), Create(headText))
+                    self.play(Create(head), Create(headText), run_time=1/self.args.speed)
                     toFadeOut.add(head, headText)
                     prevRef = head
 
@@ -204,7 +203,7 @@ class GitStory(MovingCameraScene):
 
                         prevRef = branchRec 
 
-                        self.play(Create(branchRec), Create(branchText))
+                        self.play(Create(branchRec), Create(branchText), run_time=1/self.args.speed)
                         toFadeOut.add(branchRec, branchText)
 
                         x += 1
@@ -222,7 +221,7 @@ class GitStory(MovingCameraScene):
 
                         prevRef = tagRec
 
-                        self.play(Create(tagRec), Create(tagText))
+                        self.play(Create(tagRec), Create(tagText), run_time=1/self.args.speed)
                         toFadeOut.add(tagRec, tagText)
 
                         x += 1
@@ -230,14 +229,14 @@ class GitStory(MovingCameraScene):
                             break
 
             else:
-                self.play(self.camera.frame.animate.move_to(self.drawnCommits[commit.hexsha].get_center()))
-                self.play(Create(arrow))
+                self.play(self.camera.frame.animate.move_to(self.drawnCommits[commit.hexsha].get_center()), run_time=1/self.args.speed)
+                self.play(Create(arrow), run_time=1/self.args.speed)
                 toFadeOut.add(arrow)
                 return
 
 
             if ( prevCircle ):
-                self.play(Create(arrow))
+                self.play(Create(arrow), run_time=1/self.args.speed)
                 toFadeOut.add(arrow)
 
             prevCircle = circle
