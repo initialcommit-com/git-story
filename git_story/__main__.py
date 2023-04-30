@@ -23,6 +23,8 @@ def main():
     parser.add_argument("--low-quality", help="Render output video in low quality, useful for faster testing", action="store_true")
     parser.add_argument("--light-mode", help="Enable light-mode with white background", action="store_true")
     parser.add_argument("--invert-branches", help="Invert positioning of branches where applicable", action="store_true")
+    # disable caching to avoid issues with long animations
+    parser.add_argument("--disable-caching", help="Disable caching to avoid issues with long animations", action="store_true")
     parser.add_argument("--speed", help="A multiple of the standard 1x animation speed (ex: 2 = twice as fast, 0.5 = half as fast)", type=float, default=1)
 
     args = parser.parse_args()
@@ -34,6 +36,8 @@ def main():
 
     if ( args.light_mode ):
         config.background_color = WHITE
+    if ( args.disable_caching ):
+        config.disable_caching = True
 
     scene = gs.GitStory(args)
     scene.render()
