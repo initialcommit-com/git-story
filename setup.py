@@ -32,5 +32,6 @@ setuptools.setup(
             'git-story=git_story.__main__:main',
         ],
     },
-    include_package_data=True
+    include_package_data=True,
+    license_files = ('license',),
 )
